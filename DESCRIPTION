@@ -1,0 +1,17 @@
+Package: ebanks.package
+Title: Fungal OTU analysis
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Ariel",
+           family = "Ebanks",
+           role = c("aut", "cre"),
+           email = "ariel.ebanks@selu.edu",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: This R package analyzes fungal otu abundance, richness, and diversity.
+License: MIT
+Imports: tidyverse, testthat
+Suggests: knitr, rmarkdown, testthat
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
