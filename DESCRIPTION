@@ -5,11 +5,12 @@ Authors@R:
     person(given = "Ariel",
            family = "Ebanks",
            role = c("aut", "cre"),
-           email = "ariel.ebanks@selu.edu",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: This R package analyzes fungal otu abundance, richness, and diversity.
+           email = "ariel.ebanks@selu.edu")
+Description: This R package analyzes fungal OTU abundance, richness, and diversity.
+Depends:
+  R(>= 3.0.0)
 License: MIT
-Imports: tidyverse, testthat
+Imports: tidyverse
 Suggests: knitr, rmarkdown, testthat
 Encoding: UTF-8
 LazyData: true
