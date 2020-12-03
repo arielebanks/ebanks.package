@@ -6,11 +6,11 @@ Authors@R:
            family = "Ebanks",
            role = c("aut", "cre"),
            email = "ariel.ebanks@selu.edu")
-Description: This R package analyzes fungal OTU abundance, richness, and diversity.
+Description: This R package processes operational taxonomic unit (OTU) abundance matrices and sample data for downstream analysis.
 Depends:
   R(>= 3.0.0)
 License: MIT
-Imports: tidyverse
+Imports: assertthat, tidyverse, magrittr, metacoder, phyloseq, taxa
 Suggests: knitr, rmarkdown, testthat
 Encoding: UTF-8
 LazyData: true

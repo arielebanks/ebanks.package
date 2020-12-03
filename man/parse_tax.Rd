@@ -2,7 +2,7 @@
 % Please edit documentation in R/function_process_otu_dataset.R
 \name{parse_tax}
 \alias{parse_tax}
-\title{Fix column name typos, remove NAs, and parse taxonomic information in OTU dataset}
+\title{Fix column typos, remove NAs, and parse taxonomic information in OTU dataset}
 \usage{
 parse_tax(otu_data)
 }
@@ -13,5 +13,5 @@ parse_tax(otu_data)
 taxmap object containing tibble with OTU counts and tibble with class data for each taxon
 }
 \description{
-Fix column name typos, remove NAs, and parse taxonomic information in OTU dataset
+Fix column typos, remove NAs, and parse taxonomic information in OTU dataset
 }

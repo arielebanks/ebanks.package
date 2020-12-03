@@ -1,7 +1,8 @@
-#' Fix column name typos, remove NAs, and parse taxonomic information in OTU dataset
+#' Fix column typos, remove NAs, and parse taxonomic information in OTU dataset
 #'
 #' @param otu_data OTU dataset containing abundances and taxonomic classifications
 #' @importFrom assertthat assert_that
+#' @importFrom dplyr rename
 #' @importFrom taxa parse_tax_data
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate

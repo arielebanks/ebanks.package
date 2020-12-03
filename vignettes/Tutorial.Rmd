@@ -1,0 +1,95 @@
+---
+title: "Package Tutorial"
+author: "Ariel Ebanks"
+date: "11/16/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Processing operational taxonomic unit (OTU) abundance matrices and sample data for downstream analysis
+
+## ebanks.package
+
+Once amplicon data is processed, it can be returned as an abundance matrix, data table of OTU taxonomic information, and data table with sample information. The format of these datasets vary depending on the program used to process the amplicon data. The purpose of this package is to turn these separate datasets into one usable **`taxmap`** object that can be easily manipulated and analyzed with functions from **`metacoder`**, **`taxa`**, and **`phyloseq`**.  
+
+Let's install and load the package.
+
+```{r message=FALSE, eval=FALSE, purl=TRUE}
+devtools::install_github("arielebanks/ebanks.package")
+```
+
+```{r load-project, message=FALSE, purl=FALSE}
+library(ebanks.package)
+```
+
+
+This tutorial will use a sample data table and a fungal OTU abundance matrix. Before you read in the data, make sure **`tidyverse`** is loaded.
+
+```{r, message=FALSE, purl=FALSE}
+library(tidyverse)
+```
+
+
+Now, let's read in and inspect the sample data table. 
+
+```{r, results='hide', purl=FALSE}
+spartina_sample <- read_csv("../inst/extdata/spartina_sample.csv")
+```
+
+```{r, purl=FALSE}
+print(spartina_sample)
+```
+
+
+In this study, leaves, roots, and rhizosphere samples were collected from Spartina alterniflora in oiled and non-oiled sites along the Louisiana Gulf Coast. It displays samples as rows and environmental data and fungal OTUs as columns. 
+
+
+Let's do the same for the abundance matrix.
+
+```{r, results='hide', purl=FALSE}
+spartina_otu <- read_csv("../inst/extdata/spartina_otu.csv")
+```
+
+```{r, purl=FALSE}
+print(spartina_otu)
+```
+
+
+This abundance matrix is formatted properly with fungal OTUs as rows and samples as columns, but the "taxa_assignment" column is not formatted in a way we can use meaningfully. Also, there is a typo in the first column - "out_id" should read "otu_id". 
+
+### Parse taxonomic information from abundance matrix
+
+In order to visualize and analyze fungal abundance, richness, and diversity, taxonomic information should be parsed from the abundance matrix. 
+This function takes an OTU dataset and creates a **`taxmap`** object with an abundance matrix and parsed taxonomic classifications in two separate tibbles. Additionally, this function will replace "None" with "NAs" in the "taxa_assignment" column and fix the "otu_id" column typo in our **`spartina_otu`** dataset. 
+
+```{r}
+obj <- parse_tax(spartina_otu)
+print(obj)
+```
+
+
+Our **`taxmap`** object says that there are 1328 unique taxa in the dataset, and provides the IDs each was assigned. These IDs can be found in the new column "taxon_id". It also tells us how closely each one will appear in our heat tree. We also see that there are now 2 datasets - **`obj$data$tax_data`** and **`obj$data$class_data`**. 
+
+
+### Manipulating the abundance matrix 
+
+Now, we can remove any low abundance counts that may be present due to error, rarefy our counts in case of uneven sampling, and get abundances per taxon and sample tissue type. This function will replace any counts less than 5 with 0 in **`obj$data$tax_data`**, and then remove them from the dataset. It will also provide 2 new datasets called **`obj$data$taxon_abundance`** and **`obj$data$tax_sample`** where abundances per taxon and tissue type can be found.
+We'll use the **`taxmap`** object generated from the previous function as the input here, but we'll name our new object something different so we can compare them. 
+
+```{r}
+obj_complete <- fung_abund(obj)
+print(obj_complete)
+```
+
+
+## Visualize abundances in all samples using heat tree
+
+Now we can visualize the fungal abundance present in all samples by creating a heat tree from **`obj_complete`**. 
+
+```{r}
+fung_abund_tree(obj_complete)
+```
+
